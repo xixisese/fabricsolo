@@ -1,0 +1,40 @@
+version: '3'
+
+volumes:
+  explorer-walletstore:
+
+networks:
+  mhnet:
+    external: true
+
+services:
+  explorer:
+    image: hyperledger/explorer:1.1.8
+    container_name: explorer
+    hostname: explorer.dev
+    environment:
+      - DATABASE_HOST=explorerdb.dev
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWD=password
+      - LOG_LEVEL_APP=debug
+      - LOG_LEVEL_DB=debug
+      - LOG_LEVEL_CONSOLE=ALL
+      - LOG_CONSOLE_STDOUT=true
+      - DISCOVERY_AS_LOCALHOST=false
+    volumes:
+      # config.json文件位置
+      - ./net1/config.json:/opt/explorer/app/platform/fabric/config.json
+      # connection profile 文件的位置 
+      - ./net1/connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      # 组织的msp路径
+      - ./../msp:/tmp/crypto
+      # 钱包位置
+      - explorer-walletstore:/opt/explorer/wallet
+    ports:
+      - 8080:8080
+        #depends_on:
+        #  explorerdb:
+        #    condition: service_healthy
+    networks:
+      - mhnet

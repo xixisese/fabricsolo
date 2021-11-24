@@ -1,0 +1,29 @@
+version: '3'
+
+volumes:
+  explorer-pgdata:
+
+networks:
+  mhnet:
+    external: true
+
+services:
+  explorerdb:
+    image: hyperledger/explorer-db:1.1.8
+    container_name: explorerdb
+    hostname: explorerdb.dev
+    environment:
+      - DATABASE_DATABASE=fabricexplorer
+      - DATABASE_USERNAME=hppoc
+      - DATABASE_PASSWORD=password
+    healthcheck:
+      test: "pg_isready -h localhost -p 5432 -q -U postgres"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - explorer-pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - mhnet

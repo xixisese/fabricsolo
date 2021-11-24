@@ -1,0 +1,53 @@
+{
+	"name": "devnet",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": false,
+		"adminCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"enableAuthentication": true,
+		"organization": "Dev",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "6000"
+				},
+				"orderer": "6000"
+			}
+		}
+	},
+	"channels": {
+		"channel1": {
+			"peers": {
+				"peer1.dev": {}
+			}
+		}
+	},
+	"organizations": {
+		"Dev": {
+			"mspid": "Dev",
+			"adminPrivateKey": {
+				"path": "/tmp/crypto/admin-dev/msp/keystore/admin-dev.key"
+			},
+            "peers": ["peer1.dev"],
+            "signedCert": {
+                "path": "/tmp/crypto/admin-dev/msp/signcerts/admin-dev.crt"
+            }
+		}
+	},
+	"peers": {
+		"peer1.dev": {
+			"tlsCACerts": {
+				"path": "/tmp/crypto/peer1-dev/msp/tlscacerts/root-dev.crt"
+			},
+			"url": "grpc://peer1.dev:8050"
+		}
+	},
+    "orderers": {
+        "orderer.dev": {
+          "url": "grpc://orderer.dev:7050"
+        }
+    }
+}
