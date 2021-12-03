@@ -150,6 +150,7 @@ services:
         - /var/run/docker.sock:/var/run/docker.sock
         - etc-cli-dev:/etc/hyperledger/fabric
         - var-cli-dev:/var/hyperledger
+        - /Users/lc/projects/go/src/github.com/mhtech/sxdl/sxdlcc:/var/hyperledger/data/chaincode
 
     networks:
         mhnet:
